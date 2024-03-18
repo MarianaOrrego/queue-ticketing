@@ -1,0 +1,18 @@
+.card-container {
+  height: 35vh;
+}
+
+.card-body {
+  overflow-y: auto;
+}
+
+.card-button {
+  background-color: #61dafb;
+  border-color    : #61dafb;
+  color           : white;
+  font-size       : 20px;
+  font-weight     : bold;
+  width           : 100%;
+  border-radius   : 5px;
+  margin-bottom   : 3px;
+}
