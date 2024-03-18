@@ -1,11 +1,16 @@
-import QueueTicketing from "../components/QueueTicketing"
+import { objectManager } from "../classes";
+import TicketInformation from "../components/TicketInformation";
 
 const HomePage = () => {
+  const displayManager = objectManager.displayManager;
+  const displayArray = Object.values(displayManager.queue);
+  const reverseDisplayArray = displayArray.reverse();
+
   return (
     <div>
-      <QueueTicketing />
+      <TicketInformation reverseDisplayArray={reverseDisplayArray} />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
