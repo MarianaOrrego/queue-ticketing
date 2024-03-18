@@ -1,0 +1,46 @@
+.ticket-container {
+  margin-top: 20px;
+}
+
+.current-ticket {
+  background-color: #61dafb;
+  padding         : 10px;
+  border-radius   : 5px;
+  margin-bottom   : 10px;
+  text-align      : center;
+  height          : 30vh;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+}
+
+.text-ticket {
+  font-size: 100px;
+}
+
+.processed-tickets {
+  background-color: #61dafb;
+  padding         : 10px;
+  border-radius   : 5px;
+  margin-bottom   : 10px;
+  height          : 60vh;
+  overflow-y      : auto;
+  text-align      : center;
+}
+
+.processed-tickets p {
+  font-size    : 20px;
+  border-bottom: white 1px solid;
+  padding      : 1%;
+}
+
+.card-button {
+  background-color: #61dafb;
+  border-color    : #61dafb;
+  color           : white;
+  font-size       : 20px;
+  font-weight     : bold;
+  width           : 100%;
+  border-radius   : 5px;
+  margin-bottom   : 3px;
+}

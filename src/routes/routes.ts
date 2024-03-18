@@ -13,9 +13,17 @@ const Home = lazy(
   () =>
     import(/* webpackChunkName: "Home"*/ "../pages/HomePage")
 );
+const Checkin = lazy(
+  () =>
+    import(/* webpackChunkName: "Consultant"*/ "../pages/CheckinPage")
+);
 const Consultant = lazy(
   () =>
     import(/* webpackChunkName: "Consultant"*/ "../pages/ConsultantPage")
+);
+const Statistics = lazy(
+  () =>
+    import(/* webpackChunkName: "Consultant"*/ "../pages/StatisticsPage")
 );
 
 export const routes: Route[] = [
@@ -23,12 +31,24 @@ export const routes: Route[] = [
     path: "home",
     to: "/home",
     Component: Home,
-    name: "Main page",
+    name: "Turnero",
+  },
+  {
+    path: "checking",
+    to: "/checking",
+    Component: Checkin,
+    name: "Check in",
   },
   {
     path: "consultant",
     to: "/consultant",
     Component: Consultant,
-    name: "Informations consultant",
+    name: "Asesor",
+  },
+  {
+    path: "statistics",
+    to: "/statistics",
+    Component: Statistics,
+    name: "Estadisticas",
   }
 ];
