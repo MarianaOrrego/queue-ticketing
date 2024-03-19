@@ -1,9 +1,11 @@
+@import "colors.css";
+
 .ticket-container {
   margin-top: 20px;
 }
 
 .current-ticket {
-  background-color: #61dafb;
+  background-color: var(--primary-color);
   padding         : 10px;
   border-radius   : 5px;
   margin-bottom   : 10px;
@@ -19,7 +21,7 @@
 }
 
 .processed-tickets {
-  background-color: #61dafb;
+  background-color: var(--primary-color);
   padding         : 10px;
   border-radius   : 5px;
   margin-bottom   : 10px;
@@ -30,6 +32,6 @@
 
 .processed-tickets p {
   font-size    : 20px;
-  border-bottom: white 1px solid;
+  border-bottom: var(--secondary-color) 1px solid;
   padding      : 1%;
 }

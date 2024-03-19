@@ -11,33 +11,33 @@ interface Route {
 
 const Home = lazy(
   () =>
-    import(/* webpackChunkName: "Home"*/ "../pages/HomePage")
+    import(/* webpackChunkName: "HomePage"*/ "../pages/HomePage")
 );
 const Checkin = lazy(
   () =>
-    import(/* webpackChunkName: "Consultant"*/ "../pages/CheckinPage")
+    import(/* webpackChunkName: "CheckinPage"*/ "../pages/CheckinPage")
 );
 const Consultant = lazy(
   () =>
-    import(/* webpackChunkName: "Consultant"*/ "../pages/ConsultantPage")
+    import(/* webpackChunkName: "ConsultantPage"*/ "../pages/ConsultantPage")
 );
 const Statistics = lazy(
   () =>
-    import(/* webpackChunkName: "Consultant"*/ "../pages/StatisticsPage")
+    import(/* webpackChunkName: "StatisticsPage"*/ "../pages/StatisticsPage")
 );
 
 export const routes: Route[] = [
-  {
-    path: "home",
-    to: "/home",
-    Component: Home,
-    name: "Turnero",
-  },
   {
     path: "checking",
     to: "/checking",
     Component: Checkin,
     name: "Check in",
+  },
+  {
+    path: "home",
+    to: "/home",
+    Component: Home,
+    name: "Turnero",
   },
   {
     path: "consultant",
