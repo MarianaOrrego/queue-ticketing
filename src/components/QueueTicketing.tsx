@@ -4,17 +4,11 @@ import { QueueTicketingProps } from "../interfaces";
 import "../styles/card.css";
 
 const QueueTicketing = (props: QueueTicketingProps) => {
-  const { client, onClientSelection, onList } = props;
+  const { client, onClientSelection } = props;
 
   const handleClientSelection = (clientType: ClientType) => {
     if (onClientSelection) {
       onClientSelection(clientType);
-    }
-  };
-
-  const handleList = () => {
-    if (onList) {
-      onList();
     }
   };
 
@@ -43,9 +37,6 @@ const QueueTicketing = (props: QueueTicketingProps) => {
             onClick={() => handleClientSelection(ClientType.COMMON)}
           >
             Cliente
-          </button>
-          <button className="card-button" onClick={handleList}>
-            Lists
           </button>
         </div>
       </div>

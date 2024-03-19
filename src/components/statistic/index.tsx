@@ -13,7 +13,23 @@ const StatisticInformation = ({ agentsArray }: StatisticInformationProps) => {
           <div className="card-body">
             <h5 className="card-title">Asesor {agent.agentID}</h5>
             <div className="col-md-12 row">
-              <AverageTable />
+              <div className="col-md-3">
+                <p className="card-subtitle mb-2 text-body-secondary">
+                  Promedios
+                </p>
+                <AverageTable
+                  clients={agent.finishedClients[1]}
+                  title="Prioritario"
+                />
+                <AverageTable
+                  clients={agent.finishedClients[2]}
+                  title="Buena Gente"
+                />
+                <AverageTable
+                  clients={agent.finishedClients[3]}
+                  title="Cliente Normal"
+                />
+              </div>
               <ClientTable
                 clients={agent.finishedClients[1]}
                 title="Turnos Atendidos Prioritario"

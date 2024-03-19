@@ -1,31 +1,37 @@
+import { Client } from "../../classes";
+import { ClientTableProps } from "../../interfaces";
 import "../../styles/table.css";
 
-const AverageTable = () => {
-  return (
-    <div className="col-md-3">
-      <p className="card-subtitle mb-2 text-body-secondary">Promedios</p>
+const AverageTable = ({ clients, title }: ClientTableProps) => {
+  const calculateAverageDuration = (users: Client[]) => {
+    if (users.length === 0) return "00:00:00";
 
+    const totalDuration = users.reduce((acc, client) => {
+      const time = client.duration.split(":").map(Number);
+      const seconds = time[0] * 3600 + time[1] * 60 + time[2];
+      return acc + seconds;
+    }, 0);
+
+    const averageSeconds = totalDuration / users.length;
+    const hours = Math.floor(averageSeconds / 3600);
+    const minutes = Math.floor((averageSeconds % 3600) / 60);
+    const seconds = Math.floor(averageSeconds % 60);
+
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+  return (
+    <>
       <table className="table-container">
         <tbody>
           <tr>
-            <td>Prioritario</td>
-            <td>Promedio</td>
-          </tr>
-          <tr>
-            <td>Buena Gente</td>
-            <td>Promedio</td>
-          </tr>
-          <tr>
-            <td>Cliente Normal</td>
-            <td>Promedio</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>Promedio</td>
+            <td>{title}</td>
+            <td>{calculateAverageDuration(clients)}</td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

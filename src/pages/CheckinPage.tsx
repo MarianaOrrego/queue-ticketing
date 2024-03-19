@@ -13,16 +13,11 @@ const CheckinPage = () => {
     objectManager.queueManager = queueManager;
   };
 
-  const handleList = () => {
-    console.log("MANAGER", queueManager.queueGlobal);
-  };
-
   return (
     <div>
       <QueueTicketing
         client={client}
         onClientSelection={handleClientSelection}
-        onList={handleList}
       />
     </div>
   );
