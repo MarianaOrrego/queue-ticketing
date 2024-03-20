@@ -9,9 +9,9 @@ interface Route {
   name: string;
 }
 
-const Home = lazy(
+const Screen = lazy(
   () =>
-    import(/* webpackChunkName: "HomePage"*/ "../pages/HomePage")
+    import(/* webpackChunkName: "HomePage"*/ "../pages/ScreenPage")
 );
 const Checkin = lazy(
   () =>
@@ -34,10 +34,10 @@ export const routes: Route[] = [
     name: "Check in",
   },
   {
-    path: "home",
-    to: "/home",
-    Component: Home,
-    name: "Turnero",
+    path: "screen",
+    to: "/screen",
+    Component: Screen,
+    name: "Pantalla",
   },
   {
     path: "consultant",

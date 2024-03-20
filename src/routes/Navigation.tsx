@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import logo from "../logo.svg";
 import { routes } from "./routes";
+import { handleClearLocalStorage } from "../functions";
+
+import "../styles/card.css";
 
 export const Navigation = () => {
   return (
@@ -30,6 +33,14 @@ export const Navigation = () => {
                     </NavLink>
                   </li>
                 ))}
+                <div className="container">
+                  <button
+                    className="card-button"
+                    onClick={handleClearLocalStorage}
+                  >
+                    Reiniciar sistema
+                  </button>
+                </div>
               </ul>
             </nav>
           </div>
