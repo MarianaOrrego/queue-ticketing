@@ -2,6 +2,7 @@ import { ClientType } from "../classes";
 import { QueueTicketingProps } from "../interfaces";
 
 import "../styles/card.css";
+import "../styles/ticket.css";
 
 const QueueTicketing = (props: QueueTicketingProps) => {
   const { client, onClientSelection } = props;

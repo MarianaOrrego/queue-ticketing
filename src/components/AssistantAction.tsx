@@ -2,8 +2,15 @@ import { PropsAssistantAction } from "../interfaces";
 import "../styles/card.css";
 
 const AssistantAction = (props: PropsAssistantAction) => {
-  const { agentsArray, agentStatus, onStandBy, onFinish, onNext, onRepeat } =
-    props;
+  const {
+    agentsArray,
+    agentStatus,
+    onStandBy,
+    onFinish,
+    onNext,
+    onRepeat,
+    onCallStandBy,
+  } = props;
 
   return (
     <div className="col-md-12 mt-5">
@@ -23,6 +30,12 @@ const AssistantAction = (props: PropsAssistantAction) => {
               </button>
               <button className="card-button" onClick={() => onRepeat(index)}>
                 Repetir llamado
+              </button>
+              <button
+                className="card-button"
+                onClick={() => onCallStandBy(index)}
+              >
+                Lista de espera
               </button>
               <button className="card-button" onClick={() => onStandBy(index)}>
                 No atentido

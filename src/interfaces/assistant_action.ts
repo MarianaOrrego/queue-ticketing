@@ -7,4 +7,5 @@ export interface PropsAssistantAction {
   onFinish: (arg: number) => void;
   onNext: (arg: number) => void;
   onRepeat: (arg: number) => void;
+  onCallStandBy: (arg: number) => void;
 }
