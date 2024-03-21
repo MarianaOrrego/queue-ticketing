@@ -9,8 +9,8 @@ export class Client {
   static consecutiveBusiness: number = 1;
   static consecutiveCommon: number = 1;
   clientID: string;
-  init_time: Date = new Date();
-  end_time: Date = new Date();
+  init_time: number = Date.now(); // Date().getTime()
+  end_time: number = Date.now();
   duration: string = "xx:xx:xx";
 
   constructor(public clientType: ClientType) {
@@ -33,21 +33,26 @@ export class Client {
       throw new Error("Invalid client type");
     }
   }
+
   getDuration(): number {
-    let duration = new Date()
-    duration.setHours(this.end_time.getHours() - this.init_time.getHours())
-    duration.setMinutes(this.end_time.getMinutes() - this.init_time.getMinutes())
-    duration.setSeconds(this.end_time.getSeconds() - this.init_time.getSeconds())
-    this.duration = duration.toLocaleTimeString(undefined, { hour12: false })
-    return duration.getTime()
+    let init_time = new Date(this.init_time);
+    let end_time = new Date(this.end_time);
+    let duration = new Date();
+    duration.setHours(end_time.getHours() - init_time.getHours());
+    duration.setMinutes(end_time.getMinutes() - init_time.getMinutes());
+    duration.setSeconds(end_time.getSeconds() - init_time.getSeconds());
+    this.duration = duration.toLocaleTimeString(undefined, { hour12: false });
+    return duration.getTime();
   }
 }
 
-export class QueueManager {
+export class ClientManager {
   queuePriority: Array<Client> = [];
   queueBusiness: Array<Client> = [];
   queueCommon: Array<Client> = [];
   queueGlobal: Array<Client> = [];
+
+  nextToAttendIndex: number = 0;
 
   addClient(client: Client): void {
     switch (client.clientType) {
@@ -90,37 +95,14 @@ export class QueueManager {
         cp.push(...cc[i]);
       }
     }
-
     this.queueGlobal = cp;
   }
 
-  private _deleteClient(client: Client): void {
-    const queue = this.getQueueByType(client.clientType);
-    const index = queue.findIndex((c) => c === client);
-    if (index !== -1) {
-      queue.splice(index, 1);
-    }
-    this.update();
-  }
-
   getNextClient(): Client | null {
-    const nextClient = this.queueGlobal.shift() || null;
-    if (nextClient) {
-      this._deleteClient(nextClient);
+    if (this.queueGlobal.length > 0 && this.nextToAttendIndex < this.queueGlobal.length) {
+      return this.queueGlobal[this.nextToAttendIndex++];
     }
-    return nextClient;
+    return null;
   }
 
-  private getQueueByType(clientType: ClientType): Client[] {
-    switch (clientType) {
-      case ClientType.PRIORITY:
-        return this.queuePriority;
-      case ClientType.BUSINESS:
-        return this.queueBusiness;
-      case ClientType.COMMON:
-        return this.queueCommon;
-      default:
-        throw new Error("Invalid client type");
-    }
-  }
 }

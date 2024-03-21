@@ -1,4 +1,4 @@
-import { Client, ClientType, QueueManager } from "./client";
+import { Client, ClientType, ClientManager } from "./client";
 import { DisplayManager } from "./display";
 
 export class Agent {
@@ -14,7 +14,7 @@ export class Agent {
   available: boolean = true;
 
   constructor(
-    private queueManager: QueueManager,
+    private clientManager: ClientManager,
     private displayManager: DisplayManager,
   ) {
     this.agentID = `A${Agent.consecutiveAgentID.toString().padStart(2, "0")}`;
@@ -22,17 +22,15 @@ export class Agent {
   }
 
   callClient(): boolean {
-    const client = this.queueManager.getNextClient();
+    const client = this.clientManager.getNextClient();
     if (client) {
       this.attendingClient = client;
       this.available = false;
-      this.attendingClient.init_time = new Date();
+      this.attendingClient.init_time = Date.now();
       this.displayManager.append([this.agentID, client.clientID]);
       return true;
     } else {
-      console.log(
-        `${this.agentID} No hay clientes en espera, agente disponible`,
-      );
+      alert(`${this.agentID} No hay clientes en espera, agente disponible`);
       return false;
     }
   }
@@ -41,7 +39,7 @@ export class Agent {
     if (this.attendingClient) {
       const clientType = this.attendingClient.clientType;
       if (this.attendingClient.init_time) {
-        this.attendingClient.end_time = new Date();
+        this.attendingClient.end_time = Date.now();
         this.attendingClient.getDuration();
       }
       this.finishedClients[clientType].push(this.attendingClient);
@@ -60,6 +58,7 @@ export class Agent {
       this.standByClients.push(this.attendingClient);
       this.attendingClient = null;
       this.available = true;
+      this.callClient();
       console.log(`${this.agentID} Cliente en espera, agente disponible`);
     }
   }
@@ -74,24 +73,21 @@ export class Agent {
   callFromStandBy(): void {
     if (this.standByClients.length > 0) {
       this.attendingClient = this.standByClients.shift() || null;
+      this.repeatCall();
       if (this.attendingClient) {
-        console.log(
-          `${this.agentID} Llamando a cliente: ${this.attendingClient.clientID}`,
+        this.available = false;
+        alert(
+          `${this.agentID} Llamando a cliente ${this.attendingClient.clientID} de la lista de espera`,
         );
       }
+    } else {
+      alert(`${this.agentID} No hay clientes en espera`);
     }
   }
 }
 
 export class AgentManager {
   agents: Record<string, Agent> = {};
-
-  constructor(private queueManager: QueueManager, private displayManager: any) {
-    const A1 = new Agent(queueManager, displayManager);
-    const A2 = new Agent(queueManager, displayManager);
-    this.agents[A1.agentID] = A1;
-    this.agents[A2.agentID] = A2;
-  }
 
   addAgent(agent: Agent): void {
     this.agents[agent.agentID] = agent;
