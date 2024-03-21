@@ -28,8 +28,8 @@ const Statistics = lazy(
 
 export const routes: Route[] = [
   {
-    path: "checking",
-    to: "/checking",
+    path: "checkin",
+    to: "/checkin",
     Component: Checkin,
     name: "Check in",
   },
