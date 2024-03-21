@@ -16,8 +16,8 @@ export const Navigation = () => {
   return (
     <Suspense fallback={<span>Loading ...</span>}>
       <BrowserRouter>
-        <div className="row col-md-12">
-          <div className="col-md-3">
+        <div className="row col-md-12 col-sm-12">
+          <div className="col-md-3 col-sm-3">
             <nav>
               <img src={logo} alt="React Logo" />
               <ul>
@@ -44,7 +44,7 @@ export const Navigation = () => {
               </ul>
             </nav>
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 col-sm-9">
             <Routes>
               {routes.map(({ to, path, Component }) => (
                 <Route key={to} path={path} element={<Component />} />

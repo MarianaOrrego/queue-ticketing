@@ -14,30 +14,37 @@ const ConsultantPage = () => {
   const handleStandBy = (index: number) => {
     agent[index].standByClient();
     objectManager.agentManager = agentManager;
+    objectManager.saveToLocalStorage();
     handleStatusChange(index, agent[index].available);
   };
 
   const handleFinish = (index: number) => {
     agent[index].finishClient();
     objectManager.agentManager = agentManager;
-
+    objectManager.saveToLocalStorage();
     handleStatusChange(index, agent[index].available);
   };
 
   const handleNext = (index: number) => {
-    console.log("StandBy Clients:", agent[index].standByClients);
+    agent[index].finishClient();
     agent[index].callClient();
     objectManager.agentManager = agentManager;
-
+    objectManager.saveToLocalStorage();
     handleStatusChange(index, agent[index].available);
   };
 
   const handleRepeat = (index: number) => {
     agent[index].repeatCall();
     objectManager.agentManager = agentManager;
-    alert(
-      `Llamando al cliente ${agent[index].attendingClient?.clientID} nuevamente`,
-    );
+    objectManager.saveToLocalStorage();
+  };
+
+  const handleCallStandBy = (index: number) => {
+    agent[index].finishClient();
+    agent[index].callFromStandBy();
+    objectManager.agentManager = agentManager;
+    objectManager.saveToLocalStorage();
+    handleStatusChange(index, agent[index].available);
   };
 
   return (
@@ -49,6 +56,7 @@ const ConsultantPage = () => {
         onFinish={handleFinish}
         onNext={handleNext}
         onRepeat={handleRepeat}
+        onCallStandBy={handleCallStandBy}
       />
     </div>
   );

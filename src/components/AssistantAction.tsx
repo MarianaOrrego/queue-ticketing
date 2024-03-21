@@ -13,7 +13,7 @@ const AssistantAction = (props: PropsAssistantAction) => {
   } = props;
 
   return (
-    <div className="col-md-12 mt-5">
+    <div className="col-md-12 mt-5 row">
       {agentsArray.map((agent, index) => (
         <div key={agent.agentID}>
           <div className="card mt-5">
@@ -35,7 +35,7 @@ const AssistantAction = (props: PropsAssistantAction) => {
                 className="card-button"
                 onClick={() => onCallStandBy(index)}
               >
-                Lista de espera
+                Llamar lista de espera
               </button>
               <button className="card-button" onClick={() => onStandBy(index)}>
                 No atentido
