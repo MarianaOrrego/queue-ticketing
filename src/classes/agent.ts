@@ -45,11 +45,6 @@ export class Agent {
       this.finishedClients[clientType].push(this.attendingClient);
       this.attendingClient = null;
       this.available = true;
-      console.log(
-        `${this.agentID} Cliente ${
-          this.finishedClients[clientType].slice(-1)[0].clientID
-        } terminado, agente disponible`,
-      );
     }
   }
 
@@ -59,7 +54,6 @@ export class Agent {
       this.attendingClient = null;
       this.available = true;
       this.callClient();
-      console.log(`${this.agentID} Cliente en espera, agente disponible`);
     }
   }
 

@@ -16,7 +16,7 @@ export class ObjectManager {
     this.displayManager = new DisplayManager();
     this.clientManager = new ClientManager();
     this.agentManager = new AgentManager();
-    
+
     this.tryLoadDisplayManagerData();
     this.tryLoadClientManagerData();
     this.tryLoadAgentManagerData();
@@ -25,7 +25,7 @@ export class ObjectManager {
     this.tryLoadClientConsecutiveBusiness();
     this.tryLoadClientConsecutiveCommon();
     this.tryLoadAgentConsecutiveAgentID();
-    
+
     this.saveToLocalStorage();
   }
 
@@ -35,9 +35,8 @@ export class ObjectManager {
     );
     if (Client_consecutivePriority) {
       Client.consecutivePriority = parseInt(Client_consecutivePriority);
-    }
-    else {
-      console.log("Client_consecutivePriority not found");
+    } else {
+      console.error("Client_consecutivePriority not found");
     }
   }
 
@@ -47,9 +46,8 @@ export class ObjectManager {
     );
     if (Client_consecutiveBusiness) {
       Client.consecutiveBusiness = parseInt(Client_consecutiveBusiness);
-    }
-    else {
-      console.log("Client_consecutiveBusiness not found");
+    } else {
+      console.error("Client_consecutiveBusiness not found");
     }
   }
 
@@ -59,9 +57,8 @@ export class ObjectManager {
     );
     if (Client_consecutiveCommon) {
       Client.consecutiveCommon = parseInt(Client_consecutiveCommon);
-    }
-    else {
-      console.log("Client_consecutiveCommon not found");
+    } else {
+      console.error("Client_consecutiveCommon not found");
     }
   }
 
@@ -71,26 +68,21 @@ export class ObjectManager {
     );
     if (Agent_consecutiveAgentID) {
       Agent.consecutiveAgentID = parseInt(Agent_consecutiveAgentID);
-    }
-    else {
-      console.log("Agent_consecutiveAgentID not found");
+    } else {
+      console.error("Agent_consecutiveAgentID not found");
     }
   }
 
   tryLoadDisplayManagerData(): any {
-    // Load object states from localStorage
     const displayManager_data = localStorage.getItem("displayManager");
 
-    // Retrieve object states
     if (displayManager_data) {
       const displayManagerParsed = JSON.parse(displayManager_data);
       for (const client of displayManagerParsed.queue) {
         this.displayManager.queue.push(client);
       }
-      console.log("Display Manager", displayManagerParsed);
-    }
-    else {  
-      console.log("Display Manager not found");
+    } else {
+      console.error("Display Manager not found");
     }
   }
 
@@ -104,13 +96,13 @@ export class ObjectManager {
   }
 
   tryLoadClientManagerData(): any {
-    // Load object states from localStorage
     const clientManager_data = localStorage.getItem("clientManager");
 
-    // Retrieve object states
     if (clientManager_data) {
       const clientManagerParsed = JSON.parse(clientManager_data);
-      this.clientManager.nextToAttendIndex = parseInt(clientManagerParsed.nextToAttendIndex);
+      this.clientManager.nextToAttendIndex = parseInt(
+        clientManagerParsed.nextToAttendIndex,
+      );
       for (const client of clientManagerParsed.queuePriority) {
         this.clientManager.queuePriority.push(this.retrieveClientData(client));
       }
@@ -121,18 +113,14 @@ export class ObjectManager {
         this.clientManager.queueCommon.push(this.retrieveClientData(client));
       }
       this.clientManager.update();
-      console.log("Client Manager", clientManagerParsed);
-    }
-    else {
-      console.log("Client Manager not found");
+    } else {
+      console.error("Client Manager not found");
     }
   }
 
   tryLoadAgentManagerData(): any {
-    // Load object states from localStorage
     const agentManager_data = localStorage.getItem("agentManager");
 
-    // Retrieve object states
     if (agentManager_data) {
       const agentManagerParsed = JSON.parse(agentManager_data);
       for (const agentID of Object.keys(agentManagerParsed.agents)) {
@@ -141,7 +129,9 @@ export class ObjectManager {
         agent.agentID = agentID;
         agent.available = Boolean(agentParsed.available);
         if (agentParsed.attendingClient) {
-          agent.attendingClient = this.retrieveClientData(agentParsed.attendingClient);
+          agent.attendingClient = this.retrieveClientData(
+            agentParsed.attendingClient,
+          );
         }
         for (const client of agentParsed.standByClients) {
           agent.standByClients.push(this.retrieveClientData(client));
@@ -149,29 +139,38 @@ export class ObjectManager {
         for (const clientTypeKey of Object.keys(agentParsed.finishedClients)) {
           const clientType: ClientType = parseInt(clientTypeKey) as ClientType;
           for (const client of agentParsed.finishedClients[clientType]) {
-            agent.finishedClients[clientType].push(this.retrieveClientData(client));
+            agent.finishedClients[clientType].push(
+              this.retrieveClientData(client),
+            );
           }
         }
         this.agentManager.agents[agentID] = agent;
       }
-      console.log("Agent Manager", agentManagerParsed);
-    }
-    else {
-      console.log("Agent Manager not found");
+    } else {
       const A1 = new Agent(this.clientManager, this.displayManager);
       const A2 = new Agent(this.clientManager, this.displayManager);
       this.agentManager.agents[A1.agentID] = A1;
       this.agentManager.agents[A2.agentID] = A2;
-      console.log("Agent Manager", this.agentManager);
     }
   }
 
   saveToLocalStorage(): void {
-    //  Save all class attributes to localStorage
-    localStorage.setItem("Client_consecutivePriority", JSON.stringify(Client.consecutivePriority));
-    localStorage.setItem("Client_consecutiveBusiness", JSON.stringify(Client.consecutiveBusiness));
-    localStorage.setItem("Client_consecutiveCommon", JSON.stringify(Client.consecutiveCommon));
-    localStorage.setItem("Agent_consecutiveAgentID", JSON.stringify(Agent.consecutiveAgentID));
+    localStorage.setItem(
+      "Client_consecutivePriority",
+      JSON.stringify(Client.consecutivePriority),
+    );
+    localStorage.setItem(
+      "Client_consecutiveBusiness",
+      JSON.stringify(Client.consecutiveBusiness),
+    );
+    localStorage.setItem(
+      "Client_consecutiveCommon",
+      JSON.stringify(Client.consecutiveCommon),
+    );
+    localStorage.setItem(
+      "Agent_consecutiveAgentID",
+      JSON.stringify(Agent.consecutiveAgentID),
+    );
 
     localStorage.setItem("displayManager", JSON.stringify(this.displayManager));
     localStorage.setItem("clientManager", JSON.stringify(this.clientManager));

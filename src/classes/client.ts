@@ -58,15 +58,12 @@ export class ClientManager {
     switch (client.clientType) {
       case ClientType.PRIORITY:
         this.queuePriority.push(client);
-        console.log("PRIORITY", this.queuePriority);
         break;
       case ClientType.BUSINESS:
         this.queueBusiness.push(client);
-        console.log("BUSINESS", this.queueBusiness);
         break;
       case ClientType.COMMON:
         this.queueCommon.push(client);
-        console.log("COMMON", this.queueCommon);
         break;
       default:
         throw new Error("Invalid client type");
