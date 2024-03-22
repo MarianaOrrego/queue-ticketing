@@ -35,7 +35,7 @@ This will start the development server and open the application in your default 
 - React
 
 ## Link
-The project is deployed in the following link: [Queue Ticketing System]()
+The project is deployed in the following link: [Queue Ticketing System](https://queue-ticketing.vercel.app/checkin)
 
 ## Running the project
 To run the project in your local environment, follow these steps:
